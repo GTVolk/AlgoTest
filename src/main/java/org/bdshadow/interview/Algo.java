@@ -7,6 +7,10 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import org.springframework.data.util.StreamUtils;
 
 public class Algo {
 
@@ -18,17 +22,11 @@ public class Algo {
      */
     public Iterable<Integer> sortAndRemoveAtEvenPosition(String... inputFileNames) throws FileNotFoundException {
         List<Integer> intList = readFilesAndSort(inputFileNames);
-
-        Iterator<Integer> iterator = intList.iterator();
-        int i = 0;
-        while (iterator.hasNext()) {
-            iterator.next();
-            if (i % 2 == 0) {
-                iterator.remove();
-            }
-            i++;
-        }
-        return intList;
+        IntStream intStream = IntStream.range(0, intList.size());
+        return intStream
+        .filter(i -> ((i % 2) != 0))
+        .mapToObj(i -> intList.get(i))
+        .collect(Collectors.toList());
     }
 
     /**
