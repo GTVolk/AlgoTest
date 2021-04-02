@@ -4,10 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Algo {
 
@@ -19,11 +18,13 @@ public class Algo {
      */
     public Iterable<Integer> sortAndRemoveAtEvenPosition(String... inputFileNames) throws FileNotFoundException {
         List<Integer> intList = readFilesAndSort(inputFileNames);
-        IntStream intStream = IntStream.range(0, intList.size());
-        return intStream
-        .filter(i -> ((i % 2) != 0))
-        .mapToObj(i -> intList.get(i))
-        .collect(Collectors.toList());
+        List<Integer> result = new LinkedList<>();
+        for (int i = 0; i < intList.size(); i++) {
+            if (i % 2 != 0) {
+                result.add(intList.get(i));
+            }
+        }
+        return result;
     }
 
     /**
